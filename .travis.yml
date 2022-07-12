@@ -7,3 +7,15 @@ before_install:
   - docker build -t djelin00/visits -f Dockerfile.dev .
 script:
   - docker run -e CI=true djelin00/visits npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "visits"
+  env: "Visits-env"
+  bucket_name: "elasticbeanstalk-us-east-1-717274664613"
+  bucket_path: "visits" 
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
